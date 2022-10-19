@@ -240,3 +240,8 @@ body {
     .button:hover {
         background-color: #555;
     }
+
+    .header
+    {
+        padding-left: 160px;
+    }
