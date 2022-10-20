@@ -13,53 +13,99 @@ using MvcMovie.Data;
 
 namespace MvcMovie
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
+    //public class Startup
+    //{
+        //    public Startup(IConfiguration configuration)
+        //    {
+        //        Configuration = configuration;
+        //    }
+
+        //    public IConfiguration Configuration { get; }
+
+        //    // This method gets called by the runtime. Use this method to add services to the container.
+        //    public void ConfigureServices(IServiceCollection services)
+        //    {
+        //        services.AddControllersWithViews();
+
+        //        //services.AddDbContext<MvcMovieContext>(options =>
+        //        //        options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+
+        //        services.AddDbContext<MvcMovieContext>(options =>
+        //        options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
+        //    }
+
+        //    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        //    {
+        //        if (env.IsDevelopment())
+        //        {
+        //            app.UseDeveloperExceptionPage();
+        //        }
+        //        else
+        //        {
+        //            app.UseExceptionHandler("/Home/Error");
+        //            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        //            app.UseHsts();
+        //        }
+        //        app.UseHttpsRedirection();
+        //        app.UseStaticFiles();
+
+        //        app.UseRouting();
+
+        //        app.UseAuthorization();
+
+        //        app.UseEndpoints(endpoints =>
+        //        {
+        //            endpoints.MapControllerRoute(
+        //                name: "default",
+        //                pattern: "{controller=Home}/{action=Index}/{id?}");
+        //        });
+        //    }
+        //}
+
+
+        public class Startup
         {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-
-            //services.AddDbContext<MvcMovieContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
-
-            services.AddDbContext<MvcMovieContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("MvcMovieContext")));
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
+            public Startup(IConfiguration configuration)
             {
-                app.UseDeveloperExceptionPage();
+                Configuration = configuration;
             }
-            else
+
+            public IConfiguration Configuration { get; }
+
+            public void ConfigureServices(IServiceCollection services)
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                services.AddControllersWithViews();
+                services.AddRazorPages();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                    app.UseDatabaseErrorPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Home/Error");
+                    app.UseHsts();
+                }
+                app.UseHttpsRedirection();
+                app.UseStaticFiles();
+
+                app.UseRouting();
+
+                app.UseAuthentication();
+                app.UseAuthorization();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
+            }
         }
-    }
 }
